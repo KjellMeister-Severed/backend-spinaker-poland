@@ -11,7 +11,7 @@ app.use(cors())
 
 // define a route handler for the default home page
 app.get( "/", ( req, res ) => {
-    res.status(200);
+    res.status(200).send("yo");
 });
 
 app.post('/assignment', (req, res) => {
