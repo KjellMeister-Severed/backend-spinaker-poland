@@ -29,7 +29,7 @@ app.post('/assignment', (req, res) => {
 app.get('/case', (req, res) => {
     caseManager.getAllCases((results) => {
         res.status(200).send(results)
-    })
+    });
 })
 
 

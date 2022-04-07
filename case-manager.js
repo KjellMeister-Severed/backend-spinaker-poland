@@ -13,11 +13,10 @@ const row2case = (row) => {
     if (row.case_id === null){
         throw new Error("Interaction could not complete")
     } else {
-        let test = {
+        return {
             id: row.case_id,
             description: row.description,
         }
-        return test
     }
 }
 
@@ -25,13 +24,17 @@ const getAllCases = (cb) => {
     const sql = `SELECT * FROM Cases`
     pool.getConnection(function (err, connection) {
         connection.query(sql, (err, res) => {
-            if (err) res.status(500).send("Something went wrong");
+            if (err) cb(err);
             else {
                 console.log(res)
                 cb(res.map(row2case));
             }
         })
     })
+}
+
+const getHofstede = (cb) => {
+    const sql = `SELECT * FROM Hofstede`
 }
 
 module.exports = {
