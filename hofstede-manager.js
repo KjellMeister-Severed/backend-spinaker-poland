@@ -21,20 +21,43 @@ const row2HofstedeInfo = (row) => {
     }
 }
 
-const getHofstedeInfo = (cb) => {
+const row2HofstedeValues = (row) => {
+    if (row.uid === null){
+        throw new Error("Interaction could not complete");
+    } else {
+        return {
+            id: row.id,
+            country_id: row.country_id,
+            score: row.score,
+            explanation: row.explanation
+        }
+    }
+}
+
+const getHofstedeInfo = (countryId, cb) => {
     const sql = `SELECT * FROM Hofstede`
     pool.getConnection(function (err, connection) {
         connection.query(sql, (err, res) => {
             if(err) cb(err);
             else {
-                console.log(res)
                 cb(err, res.map(row2HofstedeInfo))
             }
         })
     })
+}
 
+const getHofstedeValues = (id, cb) => {
+    const sql = `SELECT * FROM CountryHofstede WHERE country_id = '${id}'`
+    pool.getConnection(function (err, connection){
+        connection.query(sql, (err, res) => {
+            if (err) cb(err);
+            else {
+                cb(err, res.map(row2HofstedeValues))
+            }
+        })
+    })
 }
 
 module.exports = {
-    getHofstedeInfo
+    getHofstedeInfo, getHofstedeValues
 }

@@ -38,13 +38,25 @@ app.get('/hofstede/info', (req, res) => {
     })
 })
 
+app.get('/hofstede/values/:id', (req, res) => {
+    hofstedeManager.getHofstedeValues(req.params.id,(err, _res) => {
+        if (err) {
+            console.log(req.params.id)
+            res.status(500).send("");
+        } else {
+            console.log(req.params.id)
+            res.status(200).send(_res)
+        }
+    });
+})
+
+
+
 app.get('/case', (req, res) => {
     caseManager.getAllCases((results) => {
         res.status(200).send(results)
     });
 })
-
-
 
 // start the Express server
 app.listen( port, () => {
