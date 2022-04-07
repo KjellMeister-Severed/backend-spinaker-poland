@@ -3,9 +3,10 @@ const sql = require('mysql');
 const app = express();
 const cors = require('cors');
 const generators = require('./generators');
-const caseManager = require('./case-manager')
-const pestelManager = require('./pestel-manager')
-const hofstedeManager = require('./hofstede-manager')
+const caseManager = require('./case-manager');
+const pestelManager = require('./pestel-manager');
+const hofstedeManager = require('./hofstede-manager');
+const assignmentManager = require('./assignment-manager');
 app.use(express.json());
 const port = process.env.PORT || 8080; // default port to listen
 app.use(cors())
@@ -73,7 +74,21 @@ app.get('/hofstede/values/:id', (req, res) => {
     });
 })
 
+app.get('/assignment/overview')
+
+app.post('/assignment/submit', (req, res) => {
+    assignmentManager.submitAssignment(req.body.access_code, 1, JSON.stringify(req.body.report), (err, _res) => {
+        if (err){
+            console.log(err)
+            res.status(500).send("");
+        } else {
+            res.status(200).send("OK")
+        }
+    })
+})
+
 app.get('/case', (req, res) => {
+    console.log(req.body)
     caseManager.getAllCases((results) => {
         res.status(200).send(results)
     });
