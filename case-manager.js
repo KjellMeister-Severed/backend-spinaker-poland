@@ -33,9 +33,7 @@ const getAllCases = (cb) => {
     })
 }
 
-const getHofstede = (cb) => {
-    const sql = `SELECT * FROM Hofstede`
-}
+
 
 module.exports = {
     getAllCases
