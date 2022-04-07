@@ -34,7 +34,7 @@ const row2HofstedeValues = (row) => {
     }
 }
 
-const getHofstedeInfo = (countryId, cb) => {
+const getHofstedeInfo = (cb) => {
     const sql = `SELECT * FROM Hofstede`
     pool.getConnection(function (err, connection) {
         connection.query(sql, (err, res) => {
