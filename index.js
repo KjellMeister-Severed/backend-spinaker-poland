@@ -1,11 +1,13 @@
 const express = require('express');
 const sql = require('mysql');
 const app = express();
+const cors = require('cors');
 const generators = require('./generators');
 const caseManager = require('./case-manager')
 app.use(express.json());
 const port = 8080; // default port to listen
 
+app.use(cors())
 
 // define a route handler for the default home page
 app.get( "/", ( req, res ) => {
