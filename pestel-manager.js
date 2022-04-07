@@ -9,6 +9,20 @@ const pool = sql.createPool({
     password: "Spinaker12!"
 });
 
+const row2PestelValues = (row) => {
+    if (row.id === null){
+        throw new Error("Interaction could not complete");
+    }
+    else {
+        return {
+            id: row.id,
+            country_id: row.country_id,
+            score: row.score,
+            explanation: row.explanation
+        }
+    }
+}
+
 const row2PestelInfo = (row) => {
     if (row.id === null){
         throw new Error("Interaction could not complete");
@@ -31,6 +45,18 @@ const getPestelInfo = (cb) => {
     })
 }
 
+const getPestelValues = (id, cb) => {
+    const sql = `SELECT * FROM CountryPestel WHERE country_id = '${id}'`;
+    pool.getConnection(function (err, connection){
+        connection.query(sql, (err, res) => {
+            if (err) cb(err);
+            else {
+                cb(err, res.map(row2PestelValues))
+            }
+        })
+    })
+}
+
 module.exports = {
-    getPestelInfo
+    getPestelInfo, getPestelValues
 }

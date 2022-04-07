@@ -8,7 +8,6 @@ const pestelManager = require('./pestel-manager')
 const hofstedeManager = require('./hofstede-manager')
 app.use(express.json());
 const port = process.env.PORT || 8080; // default port to listen
-
 app.use(cors())
 
 // define a route handler for the default home page
@@ -45,6 +44,18 @@ app.get('/pestel/info', (req, res)=> {
             console.log(err);
             res.status(500).send('')
         } else {
+            res.status(200).send(_res)
+        }
+    })
+})
+
+app.get('/pestel/values/:id', (req, res) => {
+    pestelManager.getPestelValues(req.params.id, (err, _res) => {
+        if (err){
+            console.log(req.params.id)
+            res.status(500).send("")
+        } else {
+            console.log(req.params.id)
             res.status(200).send(_res)
         }
     })
