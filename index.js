@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const generators = require('./generators');
 const caseManager = require('./case-manager')
+const pestelManager = require('./pestel-manager')
 const hofstedeManager = require('./hofstede-manager')
 app.use(express.json());
 const port = process.env.PORT || 8080; // default port to listen
@@ -38,6 +39,17 @@ app.get('/hofstede/info', (req, res) => {
     })
 })
 
+app.get('/pestel/info', (req, res)=> {
+    pestelManager.getPestelInfo((err, _res) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('')
+        } else {
+            res.status(200).send(_res)
+        }
+    })
+})
+
 app.get('/hofstede/values/:id', (req, res) => {
     hofstedeManager.getHofstedeValues(req.params.id,(err, _res) => {
         if (err) {
@@ -49,8 +61,6 @@ app.get('/hofstede/values/:id', (req, res) => {
         }
     });
 })
-
-
 
 app.get('/case', (req, res) => {
     caseManager.getAllCases((results) => {
