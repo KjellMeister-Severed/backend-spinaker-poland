@@ -74,7 +74,12 @@ app.get('/hofstede/values/:id', (req, res) => {
     });
 })
 
-app.get('/assignment/overview')
+app.get('/assignment/overview', (req, res) => {
+    assignmentManager.getAssignments((results) => {
+        console.log(results)
+        res.status(200).send(results)
+    })
+})
 
 app.post('/assignment/submit', (req, res) => {
     assignmentManager.submitAssignment(req.body.access_code, 1, JSON.stringify(req.body.report), (err, _res) => {
@@ -85,7 +90,7 @@ app.post('/assignment/submit', (req, res) => {
             res.status(200).send("OK")
         }
     })
-})
+});
 
 app.get('/case', (req, res) => {
     console.log(req.body)
