@@ -5,7 +5,7 @@ const cors = require('cors');
 const generators = require('./generators');
 const caseManager = require('./case-manager')
 app.use(express.json());
-const port = 8080; // default port to listen
+const port = process.env.PORT || 8080; // default port to listen
 
 app.use(cors())
 
