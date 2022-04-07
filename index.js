@@ -27,8 +27,8 @@ app.post('/assignment', (req, res) => {
 });
 
 app.get('/case', (req, res) => {
-    caseManager.getAllCases(() => {
-        res.status(200).send("")
+    caseManager.getAllCases((results) => {
+        res.status(200).send(results)
     })
 })
 
