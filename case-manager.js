@@ -17,6 +17,7 @@ const row2case = (row) => {
             id: row.case_id,
             description: row.description,
         }
+        return test
     }
 }
 
@@ -26,6 +27,7 @@ const getAllCases = (cb) => {
         connection.query(sql, (err, res) => {
             if (err) res.status(500).send("Something went wrong");
             else {
+                console.log(res)
                 cb(res.map(row2case));
             }
         })
